@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Лёгкий сайт</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=DM+Mono:wght@300;400&display=swap" rel="stylesheet"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Студия — Дизайн и Разработка</title>
+  
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -26,6 +26,7 @@
       line-height: 1.7;
       overflow-x: hidden;
     }
+
     /* ── CURSOR ── */
     body { cursor: none; }
     #cursor {
@@ -39,7 +40,8 @@
       mix-blend-mode: multiply;
     }
     body:has(a:hover) #cursor,
-    body:has(button:hover) #cursor {
+    body:has(button:hover) #cursor,
+    body:has(input:hover) #cursor {
       width: 30px; height: 30px; opacity: .6;
     }
 
@@ -49,6 +51,53 @@
       position: fixed; inset: 0; z-index: 1;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
       pointer-events: none;
+    }
+
+    /* ── ПОИСКОВАЯ СТРОКА (ОБНОВЛЕННАЯ СТИЛИЗАЦИЯ) ── */
+    .inputGroup {
+      font-family: 'Segoe UI', sans-serif;
+      max-width: 260px;
+      width: 100%;
+      position: relative;
+      z-index: 105;
+    }
+
+    .inputGroup input {
+      font-size: 85%;
+      padding: 0.6em 1em;
+      outline: none;
+      border: 1px solid var(--fog);
+      background-color: transparent;
+      border-radius: 20px;
+      width: 100%;
+      color: var(--ink);
+      transition: all 0.3s ease;
+    }
+
+    .inputGroup label {
+      font-size: 85%;
+      position: absolute;
+      left: 0;
+      top: 0;
+      padding: 0.6em 1em;
+      margin-left: 0.2em;
+      pointer-events: none;
+      transition: all 0.3s ease;
+      color: #7a736a;
+    }
+
+    /* Эффект анимации при фокусе и вводе текста */
+    .inputGroup :is(input:focus, input:valid)~label {
+      transform: translateY(-50%) scale(.85);
+      margin: 0;
+      margin-left: 1rem;
+      padding: 0 0.4rem;
+      background-color: var(--cream);
+      color: var(--rust);
+    }
+
+    .inputGroup :is(input:focus, input:valid) {
+      border-color: var(--rust);
     }
 
     /* ── NAV ── */
@@ -67,9 +116,10 @@
       font-weight: 300;
       color: var(--ink);
       text-decoration: none;
+      flex-shrink: 0;
     }
     .logo span { color: var(--rust); }
-    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
+    .nav-links { display: flex; gap: 2.5rem; list-style: none; flex-shrink: 0; }
     .nav-links a {
       font-family: 'DM Mono', monospace;
       font-size: .72rem;
@@ -90,6 +140,7 @@
     }
     .nav-links a:hover { opacity: 1; }
     .nav-links a:hover::after { width: 100%; }
+
     /* ── HERO ── */
     header {
       min-height: 100vh;
@@ -184,6 +235,7 @@
       text-align: center;
       padding-top: 40%;
     }
+
     /* ── SECTION BASE ── */
     section { padding: 6rem 3rem; position: relative; z-index: 2; }
     .section-tag {
@@ -224,6 +276,7 @@
       color: #b0a89e;
       line-height: 1.9;
     }
+
     /* ── SERVICES ── */
     #services { background: var(--cream); }
     .services-grid {
@@ -258,7 +311,8 @@
       color: #7a736a;
       line-height: 1.8;
     }
-    ── CONTACT ── */
+
+    /* ── CONTACT ── */
     #contact { background: var(--sand); }
     .contact-inner {
       display: flex;
@@ -319,7 +373,8 @@
       from { opacity: 0; }
       to   { opacity: 1; }
     }
-    scroll reveal */
+
+    /* ── SCROLL REVEAL ── */
     .reveal {
       opacity: 0;
       transform: translateY(30px);
@@ -327,9 +382,10 @@
     }
     .reveal.visible { opacity: 1; transform: none; }
 
-    /* ── RESPONSIVE ── */
+    /* ── RESPONSIVE (АДАПТИВНОСТЬ) ── */
     @media (max-width: 700px) {
-      nav { padding: 1.2rem 1.5rem; }
+      nav { padding: 1.2rem 1.5rem; flex-direction: column; gap: 1rem; }
+      .inputGroup { max-width: 100%; order: 3; }
       .nav-links { display: none; }
       header { padding: 6rem 1.5rem 3rem; }
       .hero-decor { display: none; }
@@ -343,9 +399,14 @@
 
 <div id="cursor"></div>
 
-<!-- NAV -->
 <nav>
   <a href="#" class="logo">Сту<span>дия</span></a>
+  
+  <div class="inputGroup">
+      <input type="text" required="" autocomplete="off">
+      <label for="search">Поиск по сайту...</label>
+  </div>
+
   <ul class="nav-links">
     <li><a href="#about">О нас</a></li>
     <li><a href="#services">Услуги</a></li>
@@ -353,18 +414,16 @@
   </ul>
 </nav>
 
-<!-- HERO -->
 <header>
   <p class="hero-label">Дизайн · Разработка · Идея</p>
   <h1>Создаём <em>вещи</em>, которые работают</h1>
-  <p class="hero-sub">Небольшая студия, которая верит: хороший дизайн — это не украшение, а решение задачи.</p>
+  <p class="hero-sub">Небольшая стувая, которая верит: хороший дизайн — это не украшение, а решение задачи.</p>
   <a href="#services" class="hero-cta">
     Наши услуги <span class="arrow"></span>
   </a>
   <div class="hero-decor"></div>
 </header>
 
-<!-- ABOUT -->
 <section id="about">
   <span class="section-tag reveal">— Немного о нас</span>
   <div class="about-grid">
@@ -375,7 +434,7 @@
     </div>
   </div>
 </section>
-<!-- SERVICES -->
+
 <section id="services">
   <span class="section-tag reveal">— Что мы делаем</span>
   <div class="services-grid">
@@ -402,7 +461,6 @@
   </div>
 </section>
 
-<!-- CONTACT -->
 <section id="contact">
   <div class="contact-inner">
     <span class="section-tag reveal">— Напишите нам</span>
@@ -413,7 +471,6 @@
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <span>© 2026 Студия</span>
   <span>Москва, Россия</span>
@@ -421,13 +478,14 @@
 </footer>
 
 <script>
-  // cursor
+  // Логика кастомного курсора
   const cur = document.getElementById('cursor');
   document.addEventListener('mousemove', e => {
     cur.style.left = e.clientX + 'px';
     cur.style.top  = e.clientY + 'px';
   });
-  // scroll reveal
+
+  // Появление блоков при скролле
   const els = document.querySelectorAll('.reveal');
   const io  = new IntersectionObserver(entries => {
     entries.forEach((en, i) => {
